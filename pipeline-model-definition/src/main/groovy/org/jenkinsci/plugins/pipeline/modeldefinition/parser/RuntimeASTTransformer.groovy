@@ -892,10 +892,10 @@ class RuntimeASTTransformer {
             //     TODO: maybe if there is only one stage, use it as the template for these synthetic stages?  Avoid two layers of stages when one would do.
 
             List<String> cellLabels = new ArrayList<>();
-            cell.each { cellLabels.add(it.key.key.toString() + " = '" + it.value.value.toString() + "'") }
+            cell.each { cellLabels.add(it.value.value.toString()) }
 
             // TODO: Do I need to create a new ModelASTStage each time?  I don't think so.
-            String name = "Matrix - " + cellLabels.join(", ")
+            String name = cellLabels.join(", ")
 
             return wrapper.asExternalMethodCall(ctorX(ClassHelper.make(Stage.class),
                     args(constX(name),

@@ -161,9 +161,9 @@ public class MatrixTest extends AbstractModelDefTest {
     public void matrixPipeline() throws Exception {
         expect("matrix/matrixPipeline")
                 .logContains("[Pipeline] { (foo)",
-                        "{ (Branch: Matrix - OS_VALUE = 'linux')",
-                        "{ (Branch: Matrix - OS_VALUE = 'windows')",
-                        "{ (Branch: Matrix - OS_VALUE = 'mac')")
+                        "{ (Branch: linux)",
+                        "{ (Branch: windows)",
+                        "{ (Branch: mac)")
                 .go();
     }
 
@@ -171,8 +171,8 @@ public class MatrixTest extends AbstractModelDefTest {
     public void matrixPipelineLiterals() throws Exception {
         expect("matrix/matrixPipelineLiterals")
             .logContains("[Pipeline] { (foo)",
-                "{ (Branch: Matrix - OS_VALUE = '1')",
-                "{ (Branch: Matrix - OS_VALUE = 'true')")
+                "{ (Branch: 1)",
+                "{ (Branch: true)")
             .go();
     }
 
@@ -181,8 +181,8 @@ public class MatrixTest extends AbstractModelDefTest {
     @Test
     public void matrix50() throws Exception {
         expect("matrix/matrix50")
-            .logContains("{ (Branch: Matrix - letters1 = 'a', letters10 = 'a')",
-                "{ (Branch: Matrix - letters1 = 'j', letters10 = 'e')")
+            .logContains("{ (Branch: a, a)",
+                "{ (Branch: j, e)")
             .go();
     }
 
@@ -190,8 +190,8 @@ public class MatrixTest extends AbstractModelDefTest {
     @Test
     public void matrix100() throws Exception {
         expect("matrix/matrix100")
-            .logContains("{ (Branch: Matrix - letters1 = 'a', letters10 = 'a')",
-                "{ (Branch: Matrix - letters1 = 'j', letters10 = 'j')")
+            .logContains("{ (Branch: a, a)",
+                "{ (Branch: j, j)")
             .go();
     }
 
@@ -200,8 +200,8 @@ public class MatrixTest extends AbstractModelDefTest {
     @Test
     public void matrix300() throws Exception {
         expect("matrix/matrix300")
-            .logContains("{ (Branch: Matrix - letters1 = 'a', letters10 = 'a', letters100 = 'a')",
-                "{ (Branch: Matrix - letters1 = 'j', letters10 = 'j', letters100 = 'c')")
+            .logContains("{ (Branch: a, a, a)",
+                "{ (Branch: j, j, c)")
             .go();
     }
 
@@ -210,8 +210,8 @@ public class MatrixTest extends AbstractModelDefTest {
     @Test
     public void matrix1024() throws Exception {
         expect("matrix/matrix1024")
-            .logContains("{ (Branch: Matrix - letters1 = 'a', letters4 = 'a', letters16 = 'a', letters64 = 'a', letters256 = 'a')",
-                "{ (Branch: Matrix - letters1 = 'd', letters4 = 'd', letters16 = 'd', letters64 = 'd', letters256 = 'd')")
+            .logContains("{ (Branch: a, a, a, a, a)",
+                "{ (Branch: d, d, d, d, d)")
             .go();
     }
 
@@ -219,15 +219,15 @@ public class MatrixTest extends AbstractModelDefTest {
     public void matrixPipelineTwoAxis() throws Exception {
         expect("matrix/matrixPipelineTwoAxis")
                 .logContains("[Pipeline] { (foo)",
-                        "{ (Branch: Matrix - OS_VALUE = 'linux', BROWSER_VALUE = 'firefox')",
-                        "{ (Branch: Matrix - OS_VALUE = 'windows', BROWSER_VALUE = 'firefox')",
-                        "{ (Branch: Matrix - OS_VALUE = 'mac', BROWSER_VALUE = 'firefox')",
-                        "{ (Branch: Matrix - OS_VALUE = 'linux', BROWSER_VALUE = 'chrome')",
-                        "{ (Branch: Matrix - OS_VALUE = 'windows', BROWSER_VALUE = 'chrome')",
-                        "{ (Branch: Matrix - OS_VALUE = 'mac', BROWSER_VALUE = 'chrome')",
-                        "{ (Branch: Matrix - OS_VALUE = 'linux', BROWSER_VALUE = 'safari')",
-                        "{ (Branch: Matrix - OS_VALUE = 'windows', BROWSER_VALUE = 'safari')",
-                        "{ (Branch: Matrix - OS_VALUE = 'mac', BROWSER_VALUE = 'safari')")
+                        "{ (Branch: linux, firefox)",
+                        "{ (Branch: windows, firefox)",
+                        "{ (Branch: mac, firefox)",
+                        "{ (Branch: linux, chrome)",
+                        "{ (Branch: windows, chrome)",
+                        "{ (Branch: mac, chrome)",
+                        "{ (Branch: linux, safari)",
+                        "{ (Branch: windows, safari)",
+                        "{ (Branch: mac, safari)")
                 .go();
     }
 
@@ -236,15 +236,15 @@ public class MatrixTest extends AbstractModelDefTest {
     public void matrixPipelineTwoAxisOneExclude() throws Exception {
         expect("matrix/matrixPipelineTwoAxisOneExclude")
             .logContains("[Pipeline] { (foo)",
-                "{ (Branch: Matrix - OS_VALUE = 'linux', BROWSER_VALUE = 'firefox')",
-                "{ (Branch: Matrix - OS_VALUE = 'windows', BROWSER_VALUE = 'firefox')",
-                "{ (Branch: Matrix - OS_VALUE = 'mac', BROWSER_VALUE = 'firefox')",
-                "{ (Branch: Matrix - OS_VALUE = 'linux', BROWSER_VALUE = 'chrome')",
-                "{ (Branch: Matrix - OS_VALUE = 'windows', BROWSER_VALUE = 'chrome')",
-                "{ (Branch: Matrix - OS_VALUE = 'mac', BROWSER_VALUE = 'chrome')",
-                "{ (Branch: Matrix - OS_VALUE = 'windows', BROWSER_VALUE = 'safari')",
-                "{ (Branch: Matrix - OS_VALUE = 'mac', BROWSER_VALUE = 'safari')")
-            .logNotContains("{ (Branch: Matrix - OS_VALUE = 'linux', BROWSER_VALUE = 'safari')")
+                "{ (Branch: linux, firefox)",
+                "{ (Branch: windows, firefox)",
+                "{ (Branch: mac, firefox)",
+                "{ (Branch: linux, chrome)",
+                "{ (Branch: windows, chrome)",
+                "{ (Branch: mac, chrome)",
+                "{ (Branch: windows, safari)",
+                "{ (Branch: mac, safari)")
+            .logNotContains("{ (Branch: linux, safari')")
             .go();
     }
 
@@ -253,19 +253,19 @@ public class MatrixTest extends AbstractModelDefTest {
     public void matrixPipelineTwoAxisTwoExcludes() throws Exception {
         expect("matrix/matrixPipelineTwoAxisTwoExcludes")
             .logContains("[Pipeline] { (foo)",
-                "{ (Branch: Matrix - OS_VALUE = 'linux', BROWSER_VALUE = 'firefox')",
-                "{ (Branch: Matrix - OS_VALUE = 'windows', BROWSER_VALUE = 'firefox')",
-                "{ (Branch: Matrix - OS_VALUE = 'mac', BROWSER_VALUE = 'firefox')",
-                "{ (Branch: Matrix - OS_VALUE = 'linux', BROWSER_VALUE = 'chrome')",
-                "{ (Branch: Matrix - OS_VALUE = 'windows', BROWSER_VALUE = 'chrome')",
-                "{ (Branch: Matrix - OS_VALUE = 'mac', BROWSER_VALUE = 'chrome')",
-                "{ (Branch: Matrix - OS_VALUE = 'windows', BROWSER_VALUE = 'safari')",
-                "{ (Branch: Matrix - OS_VALUE = 'mac', BROWSER_VALUE = 'safari')",
-                "{ (Branch: Matrix - OS_VALUE = 'windows', BROWSER_VALUE = 'ie')")
+                "{ (Branch: linux, firefox)",
+                "{ (Branch: windows, firefox)",
+                "{ (Branch: mac, firefox)",
+                "{ (Branch: linux, chrome)",
+                "{ (Branch: windows, chrome)",
+                "{ (Branch: mac, chrome)",
+                "{ (Branch: windows, safari)",
+                "{ (Branch: mac, safari)",
+                "{ (Branch: windows, ie)")
             .logNotContains(
-                "{ (Branch: Matrix - OS_VALUE = 'linux', BROWSER_VALUE = 'safari')",
-                "{ (Branch: Matrix - OS_VALUE = 'linux', BROWSER_VALUE = 'ie')",
-                "{ (Branch: Matrix - OS_VALUE = 'mac', BROWSER_VALUE = 'ie')")
+                "{ (Branch: linux, safari)",
+                "{ (Branch: linux, ie)",
+                "{ (Branch: mac, ie)")
             .go();
     }
 
@@ -273,19 +273,19 @@ public class MatrixTest extends AbstractModelDefTest {
     public void matrixPipelineTwoAxisExcludeNot() throws Exception {
         expect("matrix/matrixPipelineTwoAxisExcludeNot")
             .logContains("[Pipeline] { (foo)",
-                "{ (Branch: Matrix - OS_VALUE = 'linux', BROWSER_VALUE = 'firefox')",
-                "{ (Branch: Matrix - OS_VALUE = 'windows', BROWSER_VALUE = 'firefox')",
-                "{ (Branch: Matrix - OS_VALUE = 'mac', BROWSER_VALUE = 'firefox')",
-                "{ (Branch: Matrix - OS_VALUE = 'linux', BROWSER_VALUE = 'chrome')",
-                "{ (Branch: Matrix - OS_VALUE = 'windows', BROWSER_VALUE = 'chrome')",
-                "{ (Branch: Matrix - OS_VALUE = 'mac', BROWSER_VALUE = 'chrome')",
-                "{ (Branch: Matrix - OS_VALUE = 'windows', BROWSER_VALUE = 'safari')",
-                "{ (Branch: Matrix - OS_VALUE = 'mac', BROWSER_VALUE = 'safari')",
-                "{ (Branch: Matrix - OS_VALUE = 'windows', BROWSER_VALUE = 'ie')")
+                "{ (Branch: linux, firefox)",
+                "{ (Branch: windows, firefox)",
+                "{ (Branch: mac, firefox)",
+                "{ (Branch: linux, chrome)",
+                "{ (Branch: windows, chrome)",
+                "{ (Branch: mac, chrome)",
+                "{ (Branch: windows, safari)",
+                "{ (Branch: mac, safari)",
+                "{ (Branch: windows, ie)")
             .logNotContains(
-                "{ (Branch: Matrix - OS_VALUE = 'linux', BROWSER_VALUE = 'safari')",
-                "{ (Branch: Matrix - OS_VALUE = 'linux', BROWSER_VALUE = 'ie')",
-                "{ (Branch: Matrix - OS_VALUE = 'mac', BROWSER_VALUE = 'ie')")
+                "{ (Branch: linux, safari)",
+                "{ (Branch: linux, ie)",
+                "{ (Branch: mac, ie)")
             .go();
     }
 
@@ -304,9 +304,9 @@ public class MatrixTest extends AbstractModelDefTest {
         RuntimeASTTransformer.SCRIPT_SPLITTING_TRANSFORMATION = false;
         expect("matrix/matrixStageDirectives")
             .logContains("[Pipeline] { (foo)",
-                "{ (Branch: Matrix - OS_VALUE = 'linux')",
-                "{ (Branch: Matrix - OS_VALUE = 'windows')",
-                "{ (Branch: Matrix - OS_VALUE = 'mac')",
+                "{ (Branch: linux)",
+                "{ (Branch: windows)",
+                "{ (Branch: mac)",
                 "First stage, mac agent",
                 "First stage, do not override",
                 "First stage, overrode once and done",
@@ -341,9 +341,9 @@ public class MatrixTest extends AbstractModelDefTest {
     public void matrixStageDirectivesChildStage() throws Exception {
         expect("matrix/matrixStageDirectivesChildStage")
             .logContains("[Pipeline] { (foo)",
-                "{ (Branch: Matrix - OS_VALUE = 'linux')",
-                "{ (Branch: Matrix - OS_VALUE = 'windows')",
-                "{ (Branch: Matrix - OS_VALUE = 'mac')",
+                "{ (Branch: linux)",
+                "{ (Branch: windows)",
+                "{ (Branch: mac)",
                 "First stage, mac agent",
                 "First stage, do not override",
                 "First stage, overrode once and done",
@@ -376,9 +376,9 @@ public class MatrixTest extends AbstractModelDefTest {
     public void matrixStageDirectivesWhenBeforeAgent() throws Exception {
         expect("matrix/matrixStageDirectivesWhenBeforeAgent")
             .logContains("[Pipeline] { (foo)",
-                "{ (Branch: Matrix - OS_VALUE = 'linux')",
-                "{ (Branch: Matrix - OS_VALUE = 'windows')",
-                "{ (Branch: Matrix - OS_VALUE = 'mac')",
+                "{ (Branch: linux)",
+                "{ (Branch: windows)",
+                "{ (Branch: mac)",
                 "First stage, mac agent",
                 "First stage, do not override",
                 "First stage, overrode once and done",
@@ -413,9 +413,9 @@ public class MatrixTest extends AbstractModelDefTest {
     public void matrixStageDirectivesWhenBeforeAgentChildStage() throws Exception {
         expect("matrix/matrixStageDirectivesWhenBeforeAgentChildStage")
             .logContains("[Pipeline] { (foo)",
-                "{ (Branch: Matrix - OS_VALUE = 'linux')",
-                "{ (Branch: Matrix - OS_VALUE = 'windows')",
-                "{ (Branch: Matrix - OS_VALUE = 'mac')",
+                "{ (Branch: linux)",
+                "{ (Branch: windows)",
+                "{ (Branch: mac)",
                 "First stage, mac agent",
                 "First stage, do not override",
                 "First stage, overrode once and done",
@@ -556,16 +556,16 @@ public class MatrixTest extends AbstractModelDefTest {
     public void matrixStagesFailFast() throws Exception {
         expect(Result.FAILURE, "matrix/matrixStagesFailFast")
                 .logContains("[Pipeline] { (foo)",
-                        "{ (Branch: Matrix - OS_VALUE = 'linux')",
-                        "{ (Branch: Matrix - OS_VALUE = 'windows')",
-                        "{ (Branch: Matrix - OS_VALUE = 'mac')",
+                        "{ (Branch: linux)",
+                        "{ (Branch: windows)",
+                        "{ (Branch: mac)",
                         "[Pipeline] { (first)",
                         "[Pipeline] { (first)",
                         "[Pipeline] { (first)",
                         "[Pipeline] { (second)",
                         "[Pipeline] { (second)",
                         "FIRST windows STAGE FAILURE",
-                        "Failed in branch Matrix - OS_VALUE = 'windows'",
+                        "Failed in branch windows",
                         "SECOND linux STAGE ABORTED",
                         "SECOND mac STAGE ABORTED")
                 .logNotContains("Second branch",
@@ -580,16 +580,16 @@ public class MatrixTest extends AbstractModelDefTest {
     public void matrixStagesFailFastWithOption() throws Exception {
         expect(Result.FAILURE,"matrix/matrixStagesFailFastWithOption")
                 .logContains("[Pipeline] { (foo)",
-                        "{ (Branch: Matrix - OS_VALUE = 'linux')",
-                        "{ (Branch: Matrix - OS_VALUE = 'windows')",
-                        "{ (Branch: Matrix - OS_VALUE = 'mac')",
+                        "{ (Branch: linux)",
+                        "{ (Branch: windows)",
+                        "{ (Branch: mac)",
                         "[Pipeline] { (first)",
                         "[Pipeline] { (first)",
                         "[Pipeline] { (first)",
                         "[Pipeline] { (second)",
                         "[Pipeline] { (second)",
                         "FIRST windows STAGE FAILURE",
-                        "Failed in branch Matrix - OS_VALUE = 'windows'",
+                        "Failed in branch windows",
                         "SECOND linux STAGE ABORTED",
                         "SECOND mac STAGE ABORTED")
                 .logNotContains("Second branch",
@@ -604,16 +604,16 @@ public class MatrixTest extends AbstractModelDefTest {
     public void matrixStagesFailFastWithAgent() throws Exception {
         expect(Result.FAILURE, "matrix/matrixStagesFailFastWithAgent")
                 .logContains("[Pipeline] { (foo)",
-                        "{ (Branch: Matrix - OS_VALUE = 'linux')",
-                        "{ (Branch: Matrix - OS_VALUE = 'windows')",
-                        "{ (Branch: Matrix - OS_VALUE = 'mac')",
+                        "{ (Branch: linux)",
+                        "{ (Branch: windows)",
+                        "{ (Branch: mac)",
                         "[Pipeline] { (first)",
                         "[Pipeline] { (first)",
                         "[Pipeline] { (first)",
                         "[Pipeline] { (second)",
                         "[Pipeline] { (second)",
                         "FIRST windows STAGE FAILURE",
-                        "Failed in branch Matrix - OS_VALUE = 'windows'",
+                        "Failed in branch windows",
                         "SECOND linux STAGE ABORTED",
                         "SECOND mac STAGE ABORTED")
                 .logNotContains("Second branch",
@@ -629,9 +629,9 @@ public class MatrixTest extends AbstractModelDefTest {
         WorkflowRun b = expect(Result.FAILURE, "matrix/matrixStagesHaveStatusWhenSkipped")
                 .logContains("[Pipeline] { (bar)",
                         "[Pipeline] { (foo)",
-                        "{ (Branch: Matrix - OS_VALUE = 'linux')",
-                        "{ (Branch: Matrix - OS_VALUE = 'windows')",
-                        "{ (Branch: Matrix - OS_VALUE = 'mac')",
+                        "{ (Branch: linux)",
+                        "{ (Branch: windows)",
+                        "{ (Branch: mac)",
                         "[Pipeline] { (first)",
                         "[Pipeline] { (first)",
                         "[Pipeline] { (first)",
